@@ -12,3 +12,5 @@ Maximal overlap discrete wavelet transform works with HAAR filter.
 ## Inspired by: ##
 So far, the code is insipired by [wavelets package from R](http://cran.r-project.org/web/packages/wavelets/index.html)
 
+## License: ##
+As the work is mainly derived from GPL packages, this package and code is licensed under the same terms, i.e. GPL.

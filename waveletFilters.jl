@@ -12,11 +12,11 @@ type waveletFilter
 	level::Int
 	h::Vector{Float64}
 	g::Vector{Float64}
-	wtClass::String
-	wtName::String
-	transform::String
+	wtClass::ASCIIString
+	wtName::ASCIIString
+	transform::ASCIIString
 
-	function waveletFilter(L::Int, level::Int, h::Vector, g::Vector, wtClass::String, wtName::String, transform::String)
+	function waveletFilter(L::Int, level::Int, h::Vector, g::Vector, wtClass::ASCIIString, wtName::ASCIIString, transform::ASCIIString)
 		new(L, level, h, g, wtClass, wtName, transform)
 	end
 end
@@ -161,13 +161,13 @@ function d18Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
 
 function d20Filter(modwt::Bool)
- #      class = "Daubechies"
+ class = "Daubechies"
  name = "d20"
  L = 20
  g = [0.0266700579005546,0.1881768000776863,0.5272011889317202,0.6884590394536250,0.2811723436606485,-0.2498464243272283,-0.1959462743773399,0.1273693403357890,0.0930573646035802,-0.0713941471663697,-0.0294575368218480,0.0332126740593703,0.0036065535669880,-0.0107331754833036,0.0013953517470692,0.0019924052951930,-0.0006858566949566,-0.0001164668551285,0.0000935886703202,-0.0000132642028945]
@@ -177,7 +177,7 @@ function d20Filter(modwt::Bool)
 else 
  transform = "dwt" 
 end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -193,7 +193,7 @@ function la8Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -209,7 +209,7 @@ function la10Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -225,7 +225,7 @@ function la12Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -241,7 +241,7 @@ function la14Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -257,7 +257,7 @@ function la16Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -273,7 +273,7 @@ function la18Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -289,7 +289,7 @@ function la20Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -305,7 +305,7 @@ function bl14Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -321,7 +321,7 @@ function bl18Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -337,7 +337,7 @@ function bl20Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -353,7 +353,7 @@ function c6Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -369,7 +369,7 @@ function c12Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -385,7 +385,7 @@ function c18Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
@@ -401,7 +401,7 @@ function c24Filter(modwt::Bool)
   else 
    transform = "dwt" 
  end
- #      h = wtFilterQmf(g, true)
+ h = wtFilterQmf(g, true)
  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
  return wtFilter
 end
