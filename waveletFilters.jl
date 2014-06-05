@@ -37,8 +37,7 @@ function haarFilter(level::Int, modwt::Bool)
  return wtFilter
 end
 
- # TD
- function d4Filter(modwt::Bool)
+function d4Filter(level::Int, modwt::Bool)
    class = "Daubechies"
    name = "d4"
    L = 4
@@ -54,7 +53,7 @@ end
    return wtFilter
  end
 
- function d6Filter(modwt::Bool)
+ function d6Filter(level::Int, modwt::Bool)
   class = "Daubechies"
   name = "d6"
   L = 6
@@ -70,7 +69,7 @@ end
   return wtFilter
 end
 
-function d8Filter(modwt::Bool)
+function d8Filter(level::Int, modwt::Bool)
   class = "Daubechies"
   name = "d8"
   L = 8
@@ -86,7 +85,7 @@ function d8Filter(modwt::Bool)
  return wtFilter
 end
 
-function d10Filter(modwt::Bool)
+function d10Filter(level::Int, modwt::Bool)
   class = "Daubechies"
   name = "d10"
   L = 10
@@ -102,7 +101,7 @@ function d10Filter(modwt::Bool)
  return wtFilter
 end
 
-function d12Filter(modwt::Bool) 
+function d12Filter(level::Int, modwt::Bool) 
   class = "Daubechies"
   name = "d12"
   L = 12
@@ -118,7 +117,7 @@ function d12Filter(modwt::Bool)
  return wtFilter
 end
 
-function d14Filter(modwt::Bool) 
+function d14Filter(level::Int, modwt::Bool) 
   class = "Daubechies"
   name = "d14"
   L = 14
@@ -134,7 +133,7 @@ function d14Filter(modwt::Bool)
  return wtFilter
 end
 
-function d16Filter(modwt::Bool)
+function d16Filter(level::Int, modwt::Bool)
   class = "Daubechies"
   name = "d16"
   L = 16
@@ -150,7 +149,7 @@ function d16Filter(modwt::Bool)
  return wtFilter
 end
 
-function d18Filter(modwt::Bool)
+function d18Filter(level::Int, modwt::Bool)
   class = "Daubechies"
   name = "d18"
   L = 18
@@ -166,7 +165,7 @@ function d18Filter(modwt::Bool)
  return wtFilter
 end
 
-function d20Filter(modwt::Bool)
+function d20Filter(level::Int, modwt::Bool)
  class = "Daubechies"
  name = "d20"
  L = 20
@@ -182,7 +181,7 @@ end
  return wtFilter
 end
 
-function la8Filter(modwt::Bool)
+function la8Filter(level::Int, modwt::Bool)
   class = "Least Asymmetric"
   name = "la8"
   L = 8
@@ -198,7 +197,7 @@ function la8Filter(modwt::Bool)
  return wtFilter
 end
 
-function la10Filter(modwt::Bool)
+function la10Filter(level::Int, modwt::Bool)
   class = "Least Asymmetric"
   name = "la10"
   L = 10
@@ -214,7 +213,7 @@ function la10Filter(modwt::Bool)
  return wtFilter
 end
 
-function la12Filter(modwt::Bool)
+function la12Filter(level::Int, modwt::Bool)
   class = "Least Asymmetric"
   name = "la12"
   L = 12
@@ -230,7 +229,7 @@ function la12Filter(modwt::Bool)
  return wtFilter
 end
 
-function la14Filter(modwt::Bool)
+function la14Filter(level::Int, modwt::Bool)
   class = "Least Asymmetric"
   name = "la14"
   L = 14
@@ -246,7 +245,7 @@ function la14Filter(modwt::Bool)
  return wtFilter
 end
 
-function la16Filter(modwt::Bool)
+function la16Filter(level::Int, modwt::Bool)
   class = "Least Asymmetric"
   name = "la16"
   L = 16
@@ -262,7 +261,7 @@ function la16Filter(modwt::Bool)
  return wtFilter
 end
 
-function la18Filter(modwt::Bool)
+function la18Filter(level::Int, modwt::Bool)
   class = "Least Asymmetric"
   name = "la18"
   L = 18
@@ -278,7 +277,7 @@ function la18Filter(modwt::Bool)
  return wtFilter
 end
 
-function la20Filter(modwt::Bool)
+function la20Filter(level::Int, modwt::Bool)
   class = "Least Asymmetric"
   name = "la20"
   L = 20
@@ -294,7 +293,7 @@ function la20Filter(modwt::Bool)
  return wtFilter
 end
 
-function bl14Filter(modwt::Bool)
+function bl14Filter(level::Int, modwt::Bool)
   class = "Best Localized"
   name = "bl14"
   L = 14
@@ -310,7 +309,7 @@ function bl14Filter(modwt::Bool)
  return wtFilter
 end
 
-function bl18Filter(modwt::Bool)
+function bl18Filter(level::Int, modwt::Bool)
   class = "Best Localized"
   name = "bl18"
   L = 18
@@ -326,7 +325,7 @@ function bl18Filter(modwt::Bool)
  return wtFilter
 end
 
-function bl20Filter(modwt::Bool)
+function bl20Filter(level::Int, modwt::Bool)
   class = "Best Localized"
   name = "bl20"
   L = 20
@@ -342,7 +341,7 @@ function bl20Filter(modwt::Bool)
  return wtFilter
 end
 
-function c6Filter(modwt::Bool)
+function c6Filter(level::Int, modwt::Bool)
   class = "Coiflet"
   name = "c6"
   L = 6
@@ -358,7 +357,7 @@ function c6Filter(modwt::Bool)
  return wtFilter
 end
 
-function c12Filter(modwt::Bool)
+function c12Filter(level::Int, modwt::Bool)
   class = "Coiflet"
   name = "c12"
   L = 12
@@ -374,7 +373,7 @@ function c12Filter(modwt::Bool)
  return wtFilter
 end
 
-function c18Filter(modwt::Bool)
+function c18Filter(level::Int, modwt::Bool)
   class = "Coiflet"
   name = "c18"
   L = 18
@@ -390,7 +389,7 @@ function c18Filter(modwt::Bool)
  return wtFilter
 end
 
-function c24Filter(modwt::Bool)
+function c24Filter(level::Int, modwt::Bool)
   class = "Coiflet"
   name = "c24"
   L = 24
@@ -406,7 +405,7 @@ function c24Filter(modwt::Bool)
  return wtFilter
 end
 
-function c30Filter(modwt::Bool)
+function c30Filter(level::Int, modwt::Bool)
   class = "Coiflet"
   name = "c30"
   L = 30

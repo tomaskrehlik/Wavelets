@@ -61,14 +61,10 @@ function extendSeries(X::Array{Float64}, method::String, length::String, n::Int,
   return X
 end
 
-function modwt(X::Matrix, filter::String, nLevels::Int, boundary::String)
-  @assert filter=="haar"
-  @assert boundary=="periodic"
-  # require("waveletFilters.jl")
-
+function modwt(X::Array{Float64}, filter::ASCIIString, nLevels::Int, boundary::ASCIIString)
   # get wavelet coeficients and length
   # call some function
-  filter = haarFilter(nLevels, true)
+  filter = eval(Expr(:call, symbol(string(filter,"Filter")),nLevels,true))
 
   # convert X to a matrix
   if isa(X, Vector)
@@ -79,7 +75,7 @@ function modwt(X::Matrix, filter::String, nLevels::Int, boundary::String)
   end
   # reflect X for reflection method
   if (boundary == "reflection")
-    X = extendSeries(X)
+    X = extendSeries(X, boundary)
     N = 2*N
   end
 
