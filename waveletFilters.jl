@@ -1,10 +1,3 @@
-function wtFilterQmf(x::Vector, inverse::Bool)
-  L = length(x)
-  inverse ? (y = x[L:-1:1].*(-1).^((1:L)-1)) : (y = x[L:-1:1].*(-1).^(1:L))
-  return y
-end
-
-
 # Defining wavelet transforms
 
 type waveletFilter
@@ -21,6 +14,58 @@ type waveletFilter
 	end
 end
 
+function wtFilterEquivalent(wtFilter::waveletFilter, J::Int64)
+  LLast = wtFilter.L
+  hLast = wtFilter.h
+  gLast = wtFilter.g
+  for j = 2:J 
+    LNew = (2^j - 1)*(wtFilter.L-1) + 1
+    hj = Float64[]
+    gj = Float64[]
+    for l = 0:(LNew - 1)
+      u = l
+      
+      if (u >= wtFilter.L)
+        gMult = 0
+      else 
+        gMult = wtFilter.g[u+1]
+      end
+      
+      hjl = gMult*hLast[1]
+      gjl = gMult*gLast[1]
+      
+      for k = 1:(LLast-1)
+        u = u-2
+        if ((u < 0) | (u >= wtFilter.L))
+          gMult = 0 
+        else 
+          gMult = wtFilter.g[u+1]
+        end
+
+        hjl = hjl + gMult*hLast[k+1]
+        gjl = gjl + gMult*gLast[k+1]
+      end
+      hj = [hj, hjl]
+      gj = [gj, gjl]
+    end
+    hLast = hj
+    gLast = gj
+    LLast = LNew
+  end
+  wtFilter.L = convert(Int64, LLast)
+  wtFilter.h = hLast
+  wtFilter.g = gLast
+  wtFilter.level = convert(Int64, J)
+  return wtFilter
+end
+
+
+function wtFilterQmf(x::Vector, inverse::Bool)
+  L = length(x)
+  inverse ? (y = x[L:-1:1].*(-1).^((1:L)-1)) : (y = x[L:-1:1].*(-1).^(1:L))
+  return y
+end
+
 function haarFilter(level::Int, modwt::Bool)
 	class = "Daubechies"
   name = "haar"
@@ -33,7 +78,11 @@ function haarFilter(level::Int, modwt::Bool)
    transform = "dwt"
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -49,7 +98,11 @@ function d4Filter(level::Int, modwt::Bool)
      transform = "dwt" 
    end
    h = wtFilterQmf(g, true)
-   wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+   if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
    return wtFilter
  end
 
@@ -65,7 +118,11 @@ function d4Filter(level::Int, modwt::Bool)
     transform = "dwt"
   end
   h = wtFilterQmf(g, true)
-  wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
   return wtFilter
 end
 
@@ -81,7 +138,11 @@ function d8Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -97,7 +158,11 @@ function d10Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -113,7 +178,11 @@ function d12Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -129,7 +198,11 @@ function d14Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -145,7 +218,11 @@ function d16Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -161,7 +238,11 @@ function d18Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -177,7 +258,11 @@ else
  transform = "dwt" 
 end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -193,7 +278,11 @@ function la8Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -209,7 +298,11 @@ function la10Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -225,7 +318,11 @@ function la12Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -241,7 +338,11 @@ function la14Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -257,7 +358,11 @@ function la16Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -273,7 +378,11 @@ function la18Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -289,7 +398,11 @@ function la20Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -305,7 +418,11 @@ function bl14Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -321,7 +438,11 @@ function bl18Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -337,7 +458,11 @@ function bl20Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -353,7 +478,11 @@ function c6Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -369,7 +498,11 @@ function c12Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -385,7 +518,11 @@ function c18Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -401,7 +538,11 @@ function c24Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
 
@@ -417,6 +558,10 @@ function c30Filter(level::Int, modwt::Bool)
    transform = "dwt" 
  end
  h = wtFilterQmf(g, true)
- wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+ if level==1
+    wtFilter = waveletFilter(L, level, h, g, class, name, transform)
+  else
+    wtFilter = wtFilterEquivalent(waveletFilter(L, level, h, g, class, name, transform), level)
+ end
  return wtFilter
 end
